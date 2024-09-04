@@ -11,6 +11,12 @@ import {
 } from "@/components/ui/table"
 import {Button} from "@/components/ui/button";
 import { ToastDemo } from "@/components/toast_mail";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import Schedule_slot from "@/components/schedule_slot";
 
 const slots = [
     {
@@ -147,9 +153,14 @@ export default async function ProtectedPage() {
                 <TableBody>
                     {slots.map((slot) => (
                         <TableRow key={slot.sno}>
-                            <TableCell className="font-medium">{slot.sno}</TableCell>
+                            <TableCell className="font-medium text-center">{slot.sno}</TableCell>
                             <TableCell>{slot.facultyName}</TableCell>
-                            <TableCell><Button variant="outline">Schedule</Button></TableCell>
+                            <TableCell className="text-center">
+                                <Popover>
+                                <PopoverTrigger>View Schedule</PopoverTrigger>
+                                <PopoverContent><Schedule_slot /></PopoverContent>
+                                </Popover>
+                            </TableCell>
 
                             <TableCell className="text-right">
                 <span className={`${

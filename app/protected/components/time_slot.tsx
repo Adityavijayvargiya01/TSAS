@@ -1,7 +1,6 @@
 "use client"
 
-import * as React from "react"
-import { format } from "date-fns"
+import React, { useState } from "react"
 import { Clock as ClockIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -16,7 +15,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 
 type TimeSlot = {
     start: string;
@@ -26,13 +25,17 @@ type TimeSlot = {
 export function TimeSlotPicker({
                                    className,
                                }: React.HTMLAttributes<HTMLDivElement>) {
-    const [timeSlot, setTimeSlot] = React.useState<TimeSlot | undefined>()
+    const [timeSlot, setTimeSlot] = useState<TimeSlot | undefined>()
 
-    const hours = Array.from({ length: 24 }, (_, i) => i)
+    const hours = Array.from({ length: 10 }, (_, i) => i + 9)
     const minutes = ['00', '15', '30', '45']
 
     const timeOptions = hours.flatMap(hour =>
-        minutes.map(minute => `${hour.toString().padStart(2, '0')}:${minute}`)
+        minutes.map(minute => {
+            const period = hour < 12 ? 'AM' : 'PM'
+            const displayHour = hour > 12 ? hour - 12 : (hour === 12 ? 12 : hour)
+            return `${displayHour}:${minute} ${period}`
+        })
     )
 
     return (

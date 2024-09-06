@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import {Button} from "@/components/ui/button";
-import { ToastDemo } from "@/components/toast_mail";
+import { ToastDemo } from "@/app/protected/components/toast_mail";
 import {
     Popover,
     PopoverContent,
@@ -18,7 +18,15 @@ import {
 } from "@/components/ui/popover";
 import Schedule_slot from "@/components/schedule_slot";
 
-const slots = [
+interface Slot {
+    sno: string;
+    facultyName: string;
+    classes1: string;
+    classes2: string;
+    status: 'Occupied' | 'Vacant' | 'Partially Occupied';
+}
+
+const Slot = [
     {
         sno: "1",
         facultyName: "Dr. John Doe",
@@ -53,77 +61,7 @@ const slots = [
         classes1: "Economics 201",
         classes2: "-",
         status: "Partially Occupied",
-    },
-    {
-        sno: "6",
-        facultyName: "Prof. Sarah Wilson",
-        classes1: "Psychology 101",
-        classes2: "Sociology 201",
-        status: "Occupied",
-    },
-    {
-        sno: "7",
-        facultyName: "Dr. William Harris",
-        classes1: "Biology 101",
-        classes2: "Genetics 201",
-        status: "Occupied",
-    },
-    {
-        sno: "8",
-        facultyName: "Prof. Olivia Martinez",
-        classes1: "-",
-        classes2: "-",
-        status: "Vacant",
-    },
-    {
-        sno: "9",
-        facultyName: "Dr. James Thompson",
-        classes1: "Chemistry 101",
-        classes2: "Organic Chemistry 202",
-        status: "Occupied",
-    },
-    {
-        sno: "10",
-        facultyName: "Prof. Sophia Clark",
-        classes1: "Philosophy 101",
-        classes2: "-",
-        status: "Partially Occupied",
-    },
-    {
-        sno: "11",
-        facultyName: "Dr. Daniel King",
-        classes1: "History 101",
-        classes2: "Modern History 201",
-        status: "Occupied",
-    },
-    {
-        sno: "12",
-        facultyName: "Prof. Emma Lewis",
-        classes1: "-",
-        classes2: "-",
-        status: "Vacant",
-    },
-    {
-        sno: "13",
-        facultyName: "Dr. David Wright",
-        classes1: "Statistics 101",
-        classes2: "Probability 201",
-        status: "Occupied",
-    },
-    {
-        sno: "14",
-        facultyName: "Prof. Isabella Walker",
-        classes1: "Art History 101",
-        classes2: "Renaissance Art 202",
-        status: "Occupied",
-    },
-    {
-        sno: "15",
-        facultyName: "Dr. Benjamin Hill",
-        classes1: "Political Science 101",
-        classes2: "International Relations 202",
-        status: "Occupied",
-    },
+    }
 ];
 
 
@@ -151,7 +89,7 @@ export default async function ProtectedPage() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {slots.map((slot) => (
+                    {Slot.map((slot) => (
                         <TableRow key={slot.sno}>
                             <TableCell className="font-medium text-center">{slot.sno}</TableCell>
                             <TableCell>{slot.facultyName}</TableCell>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import Slot_table from "@/components/slot_table";
-import { DatePickerDemo } from "@/components/date_picker";
-import {TimeSlotPicker} from "@/components/time_slot";
+import Slot_table from "@/app/protected/components/slot_table";
+import { DatePickerDemo } from "@/app/protected/components/date_picker";
+import {TimeSlotPicker} from "@/app/protected/components/time_slot";
 import {Button} from "@/components/ui/button";
 
 export default async function ProtectedPage() {

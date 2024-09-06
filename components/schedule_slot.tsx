@@ -20,6 +20,7 @@ const timeSlots = [
     "5:00 PM - 6:00 PM",
 ];
 
+
 const ScheduleSlot: React.FC = () => {
     return (
         <main>

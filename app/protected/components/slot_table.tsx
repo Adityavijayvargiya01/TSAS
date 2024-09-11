@@ -9,7 +9,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {Button} from "@/components/ui/button";
 import { ToastDemo } from "@/app/protected/components/toast_mail";
 import {
     Popover,
@@ -74,6 +73,28 @@ export default async function ProtectedPage() {
 
     if (!user) {
         return redirect("/sign-in");
+    }
+
+    let string = 'Slot_Mon'
+    let { data: Slot_Mon, error } = await supabase
+        .from(string)
+        .select('MUJ_ID')
+
+    if (error) {
+        console.error('Error fetching data:', error)
+    } else {
+        console.log('Raw data:', Slot_Mon) // Log the raw data
+
+        if (Slot_Mon && Array.isArray(Slot_Mon) && Slot_Mon.length > 0) {
+
+        } else {
+            console.log('No data found or data is not in expected format')
+            console.log('Type of Slot_Mon:', typeof Slot_Mon)
+            console.log('Is Slot_Mon an array?', Array.isArray(Slot_Mon))
+            if (Array.isArray(Slot_Mon)) {
+                console.log('Length of Slot_Mon:', Slot_Mon.length)
+            }
+        }
     }
 
     return (

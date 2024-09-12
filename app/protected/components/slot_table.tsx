@@ -15,53 +15,10 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import Schedule_slot from "@/components/schedule_slot";
+import ScheduleSlot from "@/app/protected/components/schedule_slot";
+import {Button} from "@/components/ui/button";
 
-interface Slot {
-    sno: string;
-    facultyName: string;
-    classes1: string;
-    classes2: string;
-    status: 'Occupied' | 'Vacant' | 'Partially Occupied';
-}
 
-const Slot = [
-    {
-        sno: "1",
-        facultyName: "Dr. John Doe",
-        classes1: "Mathematics 101",
-        classes2: "Physics 202",
-        status: "Occupied",
-    },
-    {
-        sno: "2",
-        facultyName: "Prof. Jane Smith",
-        classes1: "-",
-        classes2: "-",
-        status: "Vacant",
-    },
-    {
-        sno: "3",
-        facultyName: "Dr. Robert Johnson",
-        classes1: "Computer Science 201",
-        classes2: "Data Structures 301",
-        status: "Occupied",
-    },
-    {
-        sno: "4",
-        facultyName: "Prof. Emily Brown",
-        classes1: "Literature 101",
-        classes2: "Creative Writing 202",
-        status: "Occupied",
-    },
-    {
-        sno: "5",
-        facultyName: "Dr. Michael Lee",
-        classes1: "Economics 201",
-        classes2: "-",
-        status: "Partially Occupied",
-    }
-];
 
 
 export default async function ProtectedPage() {
@@ -76,31 +33,19 @@ export default async function ProtectedPage() {
     }
 
     let string = 'Slot_Mon'
-    let { data: Slot_Mon, error } = await supabase
+
+    let { data, error } = await supabase
         .from(string)
-        .select('MUJ_ID')
+        .select('*')
 
-    if (error) {
-        console.error('Error fetching data:', error)
-    } else {
-        console.log('Raw data:', Slot_Mon) // Log the raw data
+    let Slot_Table = data
+    if(!Slot_Table) return error;
 
-        if (Slot_Mon && Array.isArray(Slot_Mon) && Slot_Mon.length > 0) {
-
-        } else {
-            console.log('No data found or data is not in expected format')
-            console.log('Type of Slot_Mon:', typeof Slot_Mon)
-            console.log('Is Slot_Mon an array?', Array.isArray(Slot_Mon))
-            if (Array.isArray(Slot_Mon)) {
-                console.log('Length of Slot_Mon:', Slot_Mon.length)
-            }
-        }
-    }
-
+    // @ts-ignore
     return (
         <div>
             <Table>
-                <TableHeader>
+                <TableHeader className="bg-secondary">
                     <TableRow>
                         <TableHead>MUJ ID</TableHead>
                         <TableHead>Faculty Name</TableHead>
@@ -110,14 +55,14 @@ export default async function ProtectedPage() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {Slot.map((slot) => (
-                        <TableRow key={slot.sno}>
-                            <TableCell className="font-medium text-center">{slot.sno}</TableCell>
-                            <TableCell>{slot.facultyName}</TableCell>
+                    {Slot_Table.map((slot) => (
+                        <TableRow key={slot.MUJ_ID}>
+                            <TableCell className="font-medium text-center">{slot.MUJ_ID}</TableCell>
+                            <TableCell>{slot.NameOfFaculty}</TableCell>
                             <TableCell className="text-center">
                                 <Popover>
                                 <PopoverTrigger>View Schedule</PopoverTrigger>
-                                <PopoverContent><Schedule_slot /></PopoverContent>
+                                <PopoverContent><ScheduleSlot /></PopoverContent>
                                 </Popover>
                             </TableCell>
 
@@ -130,7 +75,7 @@ export default async function ProtectedPage() {
                   {slot.status}
                 </span>
                             </TableCell>
-                            <TableCell><ToastDemo /></TableCell>
+                            <TableCell><Button variant="outline">Send Mail</Button></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

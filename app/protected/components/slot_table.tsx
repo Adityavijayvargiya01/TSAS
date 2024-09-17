@@ -19,8 +19,6 @@ import ScheduleSlot from "@/app/protected/components/schedule_slot";
 import {Button} from "@/components/ui/button";
 
 
-
-
 export default async function ProtectedPage() {
     const supabase = createClient();
 
